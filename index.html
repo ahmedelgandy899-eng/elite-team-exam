@@ -7,8 +7,8 @@
 
 <style>
 :root{
-  --primary:#0284c7;
-  --secondary:#0ea5e9;
+  --primary:#7c3aed;
+  --secondary:#a855f7;
   --bg:#f8fbff;
   --card:#ffffff;
   --soft:#e6f0ff;
@@ -209,7 +209,7 @@ button{
     <span class="sparkle" style="top:6px;right:-8px">💉</span>
     <span class="sparkle" style="bottom:-8px;left:50%">💉</span>
   </div>
-  <div style="margin-top:6px;font-weight:800">الإمتحان في جيبك ☝🏻</div>
+  <div style="margin-top:6px;font-weight:800">الإمتحان هتقفله معانا ☝🏻</div>
 </header>
 
 <div class="container">
@@ -219,9 +219,9 @@ button{
       <div class="progress-text">
         <span id="progressText"></span>
         <span>
-          ✔️ <span id="correctCount">0</span> |
-          ❌ <span id="wrongCount">0</span> |
-          ⏳ <span id="remainPercent">100%</span>
+          ✅ <span id="correctCount">0</span> |
+          ❎ <span id="wrongCount">0</span> |
+          ⏱️ <span id="remainPercent">100%</span>
         </span>
       </div>
       <div class="progress">
@@ -456,7 +456,7 @@ let answers = [];
 let wrongSet = [];
 
 /* ===== Timer ===== */
-let totalTime=30*60, timeLeft=totalTime;
+let totalTime=40*60, timeLeft=totalTime;
 const timerInt=setInterval(()=>{
   timeLeft--;
   let m=Math.floor(timeLeft/60), s=timeLeft%60;
@@ -547,9 +547,9 @@ function finishExam(){
 
   app.innerHTML=`
     <div class="card">
-      <h3>?? تقريرك</h3>
+      <h3>?? غلطاتك </h3>
       ${report}
-      ${wrongSet.length?`<button onclick="retry()">إعادة حل الغلط فقط</button>`:"<p>أنت ممتاز 👑</p>"}
+      ${wrongSet.length?`<button onclick="retry()">إعادة حل الغلط فقط</button>`:"<p>احسنتتتت</p>"}
     </div>`;
 }
 
