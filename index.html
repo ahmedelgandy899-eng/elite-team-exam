@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gaith Team | Exam</title>
+
+<style>
+:root{
+  --primary:#0284c7;
+  --secondary:#0ea5e9;
+  --bg:#f8fbff;
+  --card:#ffffff;
+  --soft:#e6f0ff;
+  --question:#eef7ff;
+  --option:#f9fcff;
+  --success:#16a34a;
+  --danger:#dc2626;
+  --text:#0f172a;
+
+  /* Brand dynamic */
+  --brand1:#ffffff;
+  --brand2:#e0f2fe;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Segoe UI",Tahoma,Arial,sans-serif;
+  background:linear-gradient(180deg,var(--bg),#eef6ff);
+  color:var(--text);
+}
+
+/* ================= HEADER ================= */
+header{
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  color:#fff;
+  padding:18px;
+  text-align:center;
+  overflow:hidden;
+}
+
+/* ===== Brand ===== */
+.logo{
+  position:relative;
+  font-size:28px;
+  font-weight:900;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+.brand-text{
+  background:linear-gradient(90deg,var(--brand1),var(--brand2),var(--brand1));
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shine 4s linear infinite;
+}
+@keyframes shine{
+  0%{background-position:0%}
+  100%{background-position:200%}
+}
+
+.heart{
+  display:inline-block;
+  animation:heartbeat 1.6s infinite ease-in-out;
+}
+@keyframes heartbeat{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.25)}
+  100%{transform:scale(1)}
+}
+
+/* Sparkles */
+.sparkle{
+  position:absolute;
+  font-size:14px;
+  animation:twinkle 3s infinite ease-in-out;
+}
+@keyframes twinkle{
+  0%{opacity:0;transform:scale(.6)}
+  50%{opacity:1;transform:scale(1.2)}
+  100%{opacity:0;transform:scale(.6)}
+}
+
+/* Reduced motion أثناء الامتحان */
+.exam .sparkle{animation-duration:5s;opacity:.4}
+.exam .heart{animation-duration:2.5s}
+
+/* After exam */
+.after .sparkle{animation-duration:2s}
+.after .heart{animation-duration:1.1s}
+
+/* ================= LAYOUT ================= */
+.container{max-width:520px;margin:auto;padding:16px}
+
+/* ===== Top Bar ===== */
+.top-bar{
+  display:flex;
+  gap:12px;
+  margin-bottom:16px;
+}
+.progress-box{
+  flex:1;
+  background:var(--card);
+  padding:14px;
+  border-radius:18px;
+  box-shadow:0 10px 22px rgba(2,132,199,.12);
+}
+.progress-text{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:6px;
+  font-weight:800;
+  font-size:14px;
+}
+.progress{
+  height:8px;
+  background:var(--soft);
+  border-radius:10px;
+  overflow:hidden;
+}
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+}
+
+/* Timer */
+.timer{
+  width:64px;height:64px;border-radius:50%;
+  background:conic-gradient(var(--primary) 0deg,var(--soft) 0deg);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:14px;
+  background-color:var(--card);
+}
+
+/* ================= CARD ================= */
+.card{
+  background:var(--card);
+  padding:22px;
+  border-radius:24px;
+  box-shadow:0 18px 36px rgba(2,132,199,.18);
+}
+.question-title{
+  background:var(--question);
+  padding:16px;
+  border-radius:16px;
+  font-weight:900;
+  margin-bottom:16px;
+}
+.option{
+  background:var(--option);
+  border:2px solid var(--soft);
+  border-radius:18px;
+  padding:15px;
+  margin:12px 0;
+  font-weight:700;
+  cursor:pointer;
+}
+.option.correct{background:#eafaf1;border-color:var(--success)}
+.option.wrong{background:#fff1f1;border-color:var(--danger)}
+.option.disabled{pointer-events:none;opacity:.9}
+
+button{
+  margin-top:18px;
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:20px;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  color:#fff;
+  font-weight:900;
+}
+
+/* Feedback */
+.feedback{
+  text-align:center;
+  font-size:22px;
+  margin-bottom:10px;
+  animation:pop .5s;
+}
+@keyframes pop{
+  0%{transform:scale(.6);opacity:0}
+  100%{transform:scale(1);opacity:1}
+}
+
+/* Report */
+.report{
+  background:var(--card);
+  padding:14px;
+  border-radius:14px;
+  margin:10px 0;
+  border-left:6px solid var(--soft);
+}
+.report.correct{border-color:var(--success)}
+.report.wrong{border-color:var(--danger)}
+</style>
+</head>
+
+<body class="exam">
+
+<header>
+  <div class="logo">
+    <span class="brand-text">NOKHPA Team</span>
+    <span class="heart">💖</span>
+    <span class="sparkle" style="top:-8px;left:0">✨</span>
+    <span class="sparkle" style="top:6px;right:-8px">✨</span>
+    <span class="sparkle" style="bottom:-8px;left:50%">✨</span>
+  </div>
+  <div style="margin-top:6px;font-weight:800">الإمتحان في جيبك 👏🏻</div>
+</header>
+
+<div class="container">
+
+  <div class="top-bar">
+    <div class="progress-box">
+      <div class="progress-text">
+        <span id="progressText"></span>
+        <span>
+          ✔️ <span id="correctCount">0</span> |
+          ❌ <span id="wrongCount">0</span> |
+          ⏳ <span id="remainPercent">100%</span>
+        </span>
+      </div>
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+    <div class="timer" id="timer">30:00</div>
+  </div>
+
+  <div id="app"></div>
+</div>
+
+<script>
+/* ===== Questions ===== */
+let questions = [
+  {
+    "t": "A 24-year-old primigravida is in the active phase of labor. The midwife performs a vaginal examination to estimate the shortest diameter of the pelvic inlet. Which diameter is being assessed?",
+    "o": ["Anatomical conjugate", "Obstetric conjugate", "Diagonal conjugate", "External conjugate"],
+    "a": 1
+  },
+  {
+    "t": "During a prenatal clinic visit, a nurse explains the anatomy of the fetal skull to a student. Which suture is located between the two parietal bones?",
+    "o": ["Frontal suture", "Coronal suture", "Sagittal suture", "Lambdoid suture"],
+    "a": 2
+  },
+  {
+    "t": "A woman is diagnosed with a 'kidney-shaped' pelvic inlet during a pelvic assessment. This characteristic is typical of which pelvic type?",
+    "o": ["Gynecoid", "Android", "Anthropoid", "Platypelloid"],
+    "a": 3
+  },
+  {
+    "t": "A newborn is being examined by a nurse. The nurse notes a diamond-shaped space on the top of the head where the coronal and sagittal sutures meet. What is this structure?",
+    "o": ["Posterior fontanel", "Anterior fontanel", "Mastoid fontanel", "Sphenoid fontanel"],
+    "a": 1
+  },
+  {
+    "t": "A patient asks about the acidic environment of her vagina. The nurse explains that this acidity is maintained by the conversion of glycogen to lactic acid by which organism?",
+    "o": ["Staphylococcus aureus", "Escherichia coli", "Doderlein's lactobacillus", "Candida albicans"],
+    "a": 2
+  },
+  {
+    "t": "During a gynecological exam, the physician mentions the 'Pouch of Douglas'. Where is this located in relation to the uterus?",
+    "o": ["Anteriorly", "Posteriorly", "Laterally", "Superiorly"],
+    "a": 1
+  },
+  {
+    "t": "A 30-year-old woman is undergoing surgery for a uterine condition. The surgeon needs to identify the ligament that passes from the cervix under the bladder to the pubic bones. Which ligament is this?",
+    "o": ["Transverse cervical ligament", "Uterosacral ligament", "Pubocervical ligament", "Round ligament"],
+    "a": 2
+  },
+  {
+    "t": "A nurse is teaching a class on female anatomy. Which part of the vulva is described as a small erectile organ corresponding to the male penis?",
+    "o": ["Labia majora", "Labia minora", "Clitoris", "Mons pubis"],
+    "a": 2
+  },
+  {
+    "t": "In the pelvic cavity, the nurse knows that the plane of greatest pelvic dimensions is rounded with all diameters measuring approximately:",
+    "o": ["10 cm", "11 cm", "12.5 cm", "13 cm"],
+    "a": 2
+  },
+  {
+    "t": "The false pelvis is located above the pelvic brim and has no obstetric importance.",
+    "o": ["True", "False"],
+    "a": 0
+  },
+  {
+    "t": "A patient is in labor, and the nurse is monitoring the fetal head. Molding is possible because the bones of the vault are not joined. Which bone is NOT part of the fetal skull vault?",
+    "o": ["Frontal bone", "Parietal bone", "Occipital bone", "Sphenoid bone"],
+    "a": 3
+  },
+  {
+    "t": "During a pelvic exam, the midwife measures the distance from the lower border of the symphysis pubis to the sacral promontory. This measurement is 12.5 cm. What is this diameter called?",
+    "o": ["Obstetric conjugate", "True conjugate", "Diagonal conjugate", "Transverse diameter"],
+    "a": 2
+  },
+  {
+    "t": "A nurse is assessing the pelvic outlet. Which diameter is measured from the symphysis pubis to the sacrococcygeal joint?",
+    "o": ["Anteroposterior diameter", "Transverse diameter", "Oblique diameter", "Sacro-cotyloid diameter"],
+    "a": 0
+  },
+  {
+    "t": "A woman has a pelvis characterized by a heart-shaped inlet and narrow pubic arch. This is most likely which type of pelvis?",
+    "o": ["Gynecoid", "Android", "Anthropoid", "Platypelloid"],
+    "a": 1
+  },
+  {
+    "t": "The nurse explains that the uterus has three layers. Which layer is the muscular coat that forms the main bulk of the uterus?",
+    "o": ["Endometrium", "Myometrium", "Perimetrium", "Epimetrium"],
+    "a": 1
+  },
+  {
+    "t": "A student nurse is asked to locate the Bartholin's glands. Where are they situated?",
+    "o": ["On either side of the clitoris", "On either side of the urethral orifice", "On either side of the vaginal orifice", "In the mons pubis"],
+    "a": 2
+  },
+  {
+    "t": "The anterior wall of the vagina is longer than the posterior wall.",
+    "o": ["True", "False"],
+    "a": 1
+  },
+  {
+    "t": "A pregnant woman is told her baby's head is 'engaged'. This means the widest part of the head has passed through which part of the pelvis?",
+    "o": ["Pelvic inlet", "Pelvic cavity", "Pelvic outlet", "False pelvis"],
+    "a": 0
+  },
+  {
+    "t": "The nurse identifies the ligament that runs from the cervix to the sacrum and supports the cervix in an erect position as the:",
+    "o": ["Broad ligament", "Round ligament", "Uterosacral ligament", "Ovarian ligament"],
+    "a": 2
+  },
+  {
+    "t": "Which fontanel is triangular in shape and closes by 6 to 8 weeks of age?",
+    "o": ["Anterior fontanel", "Posterior fontanel", "Mastoid fontanel", "Sphenoid fontanel"],
+    "a": 1
+  },
+  {
+    "t": "A 28-year-old woman presents with inflammation of the hairless skin folds lying between the labia majora. These structures are the:",
+    "o": ["Mons pubis", "Labia minora", "Clitoris", "Vestibule"],
+    "a": 1
+  },
+  {
+    "t": "During labor, the nurse notes that the fetal head is passing through the pelvic inlet. The largest diameter of the pelvic inlet is the:",
+    "o": ["Anteroposterior diameter", "Transverse diameter", "Oblique diameter", "Diagonal conjugate"],
+    "a": 1
+  },
+  {
+    "t": "A patient asks why the endometrium changes in thickness. The nurse explains it undergoes cyclical changes between:",
+    "o": ["1 and 5 mm", "5 and 10 mm", "10 and 15 mm", "15 and 20 mm"],
+    "a": 0
+  },
+  {
+    "t": "Which ligament is actually a fold of peritoneum and does NOT provide support to the uterus?",
+    "o": ["Round ligament", "Broad ligament", "Cardinal ligament", "Uterosacral ligament"],
+    "a": 1
+  },
+  {
+    "t": "A nurse is measuring the external conjugate using a pelvimeter. What is the normal measurement for this diameter?",
+    "o": ["10 cm", "11 cm", "12.5 cm", "20 cm"],
+    "a": 3
+  },
+  {
+    "t": "The pelvic cavity is bounded posteriorly by the sacrum.",
+    "o": ["True", "False"],
+    "a": 0
+  },
+  {
+    "t": "A woman has a pelvis with a long and narrow pelvic canal and a long sacrum. This describes which pelvic type?",
+    "o": ["Gynecoid", "Android", "Anthropoid", "Platypelloid"],
+    "a": 2
+  },
+  {
+    "t": "The nurse identifies the narrow area between the uterine cavity and the cervix, which is about 7 mm long, as the:",
+    "o": ["Fundus", "Isthmus", "Corpus", "Cornua"],
+    "a": 1
+  },
+  {
+    "t": "Which structure in the vestibule is located 2.5 cm posterior to the clitoris?",
+    "o": ["Vaginal orifice", "Urethral orifice", "Hymen", "Bartholin's duct"],
+    "a": 1
+  },
+  {
+    "t": "A 22-year-old woman has a thin membrane partially closing her vaginal orifice. This is known as the:",
+    "o": ["Prepuce", "Fourchette", "Hymen", "Perineum"],
+    "a": 2
+  },
+  {
+    "t": "The nurse explains that the fetal skull is formed of the face, the vault, and the base. How many frontal bones are in the fetal skull?",
+    "o": ["One", "Two", "Three", "Four"],
+    "a": 1
+  },
+  {
+    "t": "Which diameter of the pelvic inlet measures 12 cm and starts from the sacroiliac joint?",
+    "o": ["Anatomical transverse diameter", "Obstetric transverse diameter", "Oblique diameter", "Sacro-cotyloid diameter"],
+    "a": 2
+  },
+  {
+    "t": "The nurse notes that the uterus is supported by the pelvic floor and maintained by several ligaments. Which ligaments are also known as Cardinal ligaments?",
+    "o": ["Pubocervical ligaments", "Transverse cervical ligaments", "Uterosacral ligaments", "Round ligaments"],
+    "a": 1
+  },
+  {
+    "t": "The vaginal lining is made of squamous epithelium.",
+    "o": ["True", "False"],
+    "a": 0
+  },
+  {
+    "t": "A woman in labor has a 'Gynecoid' pelvis. What percentage of women typically have this pelvic type?",
+    "o": ["3%", "25%", "33%", "50%"],
+    "a": 3
+  },
+  {
+    "t": "The nurse is discussing the 'cornua' of the uterus. These are the angles where which structures join the uterus?",
+    "o": ["Ovaries", "Fallopian tubes", "Ureters", "Round ligaments"],
+    "a": 1
+  },
+  {
+    "t": "Which suture is located between the parietal and frontal bones?",
+    "o": ["Frontal suture", "Sagittal suture", "Coronal suture", "Lambdoid suture"],
+    "a": 2
+  },
+  {
+    "t": "A patient has a vaginal pH of 4.5. The nurse knows this is:",
+    "o": ["Strongly acidic", "Mildly acidic", "Neutral", "Alkaline"],
+    "a": 0
+  },
+  {
+    "t": "The nurse identifies the part of the cervix that protrudes into the vagina as the:",
+    "o": ["Supra vaginal portion", "Vaginal portion", "Internal os", "External os"],
+    "a": 1
+  },
+  {
+    "t": "Which ligament passes from the upper, outer angles of the uterus through the inguinal canal to the labia majora?",
+    "o": ["Broad ligament", "Round ligament", "Ovarian ligament", "Uterosacral ligament"],
+    "a": 1
+  },
+  {
+    "t": "The anatomical antero-posterior diameter of the pelvic inlet (true conjugate) measures:",
+    "o": ["10 cm", "11 cm", "12 cm", "13 cm"],
+    "a": 1
+  },
+  {
+    "t": "The posterior fontanel is also known as the 'lambda'.",
+    "o": ["True", "False"],
+    "a": 0
+  },
+  {
+    "t": "A nurse is teaching about the 'Mons Pubis'. This is a pad of fat covered with hair located over which structure?",
+    "o": ["Symphysis pubis", "Sacrum", "Ischial tuberosity", "Iliac crest"],
+    "a": 0
+  },
+  {
+    "t": "Which diameter of the pelvic inlet bisects the true conjugate and is slightly shorter than the anatomical transverse diameter?",
+    "o": ["Obstetric transverse diameter", "Oblique diameter", "Right oblique diameter", "Left oblique diameter"],
+    "a": 0
+  },
+  {
+    "t": "The nurse explains that the uterus is situated in the pelvic cavity between which two organs?",
+    "o": ["Bladder and Rectum", "Bladder and Ovaries", "Rectum and Ovaries", "Intestines and Vagina"],
+    "a": 0
+  },
+  {
+    "t": "What is the shape of the anterior fontanel?",
+    "o": ["Triangular", "Diamond-shaped", "Square", "Round"],
+    "a": 1
+  },
+  {
+    "t": "The Skene's glands are two small blind-ended tubules located on either side of the urethral orifice.",
+    "o": ["True", "False"],
+    "a": 0
+  },
+  {
+    "t": "The nurse describes the 'Vestibule' as the region between the:",
+    "o": ["Labia majora", "Labia minora", "Clitoris and Hymen", "Mons pubis and Perineum"],
+    "a": 1
+  },
+  {
+    "t": "Which ligament begins at the cornua of the uterus but behind the fallopian tubes and passes down to the ovaries?",
+    "o": ["Round ligament", "Broad ligament", "Ovarian ligament", "Uterosacral ligament"],
+    "a": 2
+  },
+  {
+    "t": "The nurse notes that the pelvic outlet is an approximately diamond-shaped space. Which joint marks its posterior boundary?",
+    "o": ["Symphysis pubis", "Sacroiliac joint", "Sacrococcygeal joint", "Ischiopubic rami"],
+    "a": 2
+  }
+
+];
+
+
+
+// ===== shuffle questions only =====
+function shuffleQuestions(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+// خلط الأسئلة فقط
+shuffleQuestions(questions);
+
+// تعريف المتغيرات الناقصة
+let i = 0;
+let correct = 0;
+let wrong = 0;
+let answers = [];
+let wrongSet = [];
+
+/* ===== Timer ===== */
+let totalTime=30*60, timeLeft=totalTime;
+const timerInt=setInterval(()=>{
+  timeLeft--;
+  let m=Math.floor(timeLeft/60), s=timeLeft%60;
+  timer.innerText=`${m}:${s<10?"0":""}${s}`;
+  let deg=(timeLeft/totalTime)*360;
+  timer.style.background=`conic-gradient(var(--primary) ${deg}deg,var(--soft) ${deg}deg)`;
+  if(timeLeft<=0){clearInterval(timerInt);finishExam();}
+},1000);
+
+/* ===== UI ===== */
+function updateTop(){
+  let total=questions.length;
+  let answered=correct+wrong;
+  progressText.innerText=`سؤال ${i+1} من ${total}`;
+  progressBar.style.width=((i+1)/total*100)+"%";
+  correctCount.innerText=correct;
+  wrongCount.innerText=wrong;
+  remainPercent.innerText=Math.round(((total-answered)/total)*100)+"%";
+}
+
+/* ===== Render ===== */
+function show(){
+  updateTop();
+  let q = questions[i];
+
+  app.innerHTML = `
+    <div class="card">
+      <div class="question-title">${q.t}</div>
+      ${q.o.map((o,idx)=>`
+        <div class="option" onclick="choose(${idx})">${o}</div>
+      `).join("")}
+    </div>
+  `;
+}
+/* ===== Choose ===== */
+function choose(v){
+  if(answers[i]!=null) return;
+  answers[i]=v;
+  let ok=v===questions[i].a;
+  ok?correct++:wrong++;
+  app.innerHTML=`
+    <div class="feedback">${ok?"🎉 شاطر جدًا كمل":"😅 ركّز يا سُكر"}</div>
+    <div class="card">
+      <div class="question-title">${questions[i].t}</div>
+      ${questions[i].o.map((o,j)=>`
+        <div class="option ${j===questions[i].a?"correct":j===v?"wrong":""} disabled">${o}</div>
+      `).join("")}
+      <button onclick="next()">التالي</button>
+    </div>`;
+}
+
+/* ===== Next ===== */
+function next(){
+  if(i<questions.length-1){i++;show();}
+  else finishExam();
+}
+
+/* ===== Finish ===== */
+function finishExam(){
+  document.body.classList.remove("exam");
+  document.body.classList.add("after");
+
+  let score=Math.round((correct/questions.length)*100);
+
+  if(score>=80){
+    document.documentElement.style.setProperty("--brand1","#22c55e");
+    document.documentElement.style.setProperty("--brand2","#fde047");
+  }else if(score>=50){
+    document.documentElement.style.setProperty("--brand1","#38bdf8");
+    document.documentElement.style.setProperty("--brand2","#e0f2fe");
+  }else{
+    document.documentElement.style.setProperty("--brand1","#fb923c");
+    document.documentElement.style.setProperty("--brand2","#fed7aa");
+  }
+
+  wrongSet=[];
+  let report="";
+  questions.forEach((q,idx)=>{
+    let ok=answers[idx]===q.a;
+    if(!ok) wrongSet.push(q);
+    report+=`
+      <div class="report ${ok?"correct":"wrong"}">
+        <b>${q.t}</b><br>
+إجابتك: ${answers[idx]!=null ? q.o[answers[idx]] : "لم يتم الحل"}<br>
+الصح: ${q.o[q.a]}
+      </div>`;
+  });
+
+  app.innerHTML=`
+    <div class="card">
+      <h3>?? تقريرك</h3>
+      ${report}
+      ${wrongSet.length?`<button onclick="retry()">إعادة حل الغلط فقط</button>`:"<p>أنت ممتاز 👑</p>"}
+    </div>`;
+}
+
+/* ===== Retry Wrong ===== */
+function retry(){
+  // نبدأ امتحان جديد بالأسئلة الغلط فقط
+  questions = [...wrongSet];
+
+  answers = [];
+  wrongSet = [];
+  i = 0;
+  correct = 0;
+  wrong = 0;
+
+  // رجوع لشكل الامتحان
+  document.body.classList.remove("after");
+  document.body.classList.add("exam");
+
+  show();
+}
+
+show();
+</script>
+
+</body>
+</html>
