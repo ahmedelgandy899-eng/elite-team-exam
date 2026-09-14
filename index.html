@@ -1,193 +1,578 @@
-{
-  "log": {
-    "version": "1.2",
-    "creator": {
-      "name": "Firefox",
-      "version": "155.0.1"
-    },
-    "browser": {
-      "name": "Firefox",
-      "version": "155.0.1"
-    },
-    "pages": [
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nokhpa Team | Exam</title>
+
+<style>
+:root{
+  --primary:#7c3aed;
+  --secondary:#a855f7;
+  --bg:#f8fbff;
+  --card:#ffffff;
+  --soft:#e6f0ff;
+  --question:#eef7ff;
+  --option:#f9fcff;
+  --success:#16a34a;
+  --danger:#dc2626;
+  --text:#0f172a;
+
+  /* Brand dynamic */
+  --brand1:#ffffff;
+  --brand2:#e0f2fe;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Segoe UI",Tahoma,Arial,sans-serif;
+  background:linear-gradient(180deg,var(--bg),#eef6ff);
+  color:var(--text);
+}
+
+/* ================= HEADER ================= */
+header{
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  color:#fff;
+  padding:18px;
+  text-align:center;
+  overflow:hidden;
+}
+
+/* ===== Brand ===== */
+.logo{
+  position:relative;
+  font-size:28px;
+  font-weight:900;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+.brand-text{
+  background:linear-gradient(90deg,var(--brand1),var(--brand2),var(--brand1));
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shine 4s linear infinite;
+}
+@keyframes shine{
+  0%{background-position:0%}
+  100%{background-position:200%}
+}
+
+.heart{
+  display:inline-block;
+  animation:heartbeat 1.6s infinite ease-in-out;
+}
+@keyframes heartbeat{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.25)}
+  100%{transform:scale(1)}
+}
+
+/* Sparkles */
+.sparkle{
+  position:absolute;
+  font-size:14px;
+  animation:twinkle 3s infinite ease-in-out;
+}
+@keyframes twinkle{
+  0%{opacity:0;transform:scale(.6)}
+  50%{opacity:1;transform:scale(1.2)}
+  100%{opacity:0;transform:scale(.6)}
+}
+
+/* Reduced motion أثناء الامتحان */
+.exam .sparkle{animation-duration:5s;opacity:.4}
+.exam .heart{animation-duration:2.5s}
+
+/* After exam */
+.after .sparkle{animation-duration:2s}
+.after .heart{animation-duration:1.1s}
+
+/* ================= LAYOUT ================= */
+.container{max-width:520px;margin:auto;padding:16px}
+
+/* ===== Top Bar ===== */
+.top-bar{
+  display:flex;
+  gap:12px;
+  margin-bottom:16px;
+}
+.progress-box{
+  flex:1;
+  background:var(--card);
+  padding:14px;
+  border-radius:18px;
+  box-shadow:0 10px 22px rgba(2,132,199,.12);
+}
+.progress-text{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:6px;
+  font-weight:800;
+  font-size:14px;
+}
+.progress{
+  height:8px;
+  background:var(--soft);
+  border-radius:10px;
+  overflow:hidden;
+}
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+}
+
+/* Timer */
+.timer{
+  width:64px;height:64px;border-radius:50%;
+  background:conic-gradient(var(--primary) 0deg,var(--soft) 0deg);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:14px;
+  background-color:var(--card);
+}
+
+/* ================= CARD ================= */
+.card{
+  background:var(--card);
+  padding:22px;
+  border-radius:24px;
+  box-shadow:0 18px 36px rgba(2,132,199,.18);
+}
+.question-title{
+  background:var(--question);
+  padding:16px;
+  border-radius:16px;
+  font-weight:900;
+  margin-bottom:16px;
+}
+.option{
+  background:var(--option);
+  border:2px solid var(--soft);
+  border-radius:18px;
+  padding:15px;
+  margin:12px 0;
+  font-weight:700;
+  cursor:pointer;
+}
+.option.correct{background:#eafaf1;border-color:var(--success)}
+.option.wrong{background:#fff1f1;border-color:var(--danger)}
+.option.disabled{pointer-events:none;opacity:.9}
+
+button{
+  margin-top:18px;
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:20px;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  color:#fff;
+  font-weight:900;
+}
+
+/* Feedback */
+.feedback{
+  text-align:center;
+  font-size:22px;
+  margin-bottom:10px;
+  animation:pop .5s;
+}
+@keyframes pop{
+  0%{transform:scale(.6);opacity:0}
+  100%{transform:scale(1);opacity:1}
+}
+
+/* Report */
+.report{
+  background:var(--card);
+  padding:14px;
+  border-radius:14px;
+  margin:10px 0;
+  border-left:6px solid var(--soft);
+}
+.report.correct{border-color:var(--success)}
+.report.wrong{border-color:var(--danger)}
+</style>
+</head>
+
+<body class="exam">
+
+<header>
+  <div class="logo">
+    <span class="brand-text">Nokhpa Team</span>
+    <span class="heart">💉</span>
+    <span class="sparkle" style="top:-8px;left:0">💉</span>
+    <span class="sparkle" style="top:6px;right:-8px">💉</span>
+    <span class="sparkle" style="bottom:-8px;left:50%">💉</span>
+  </div>
+  <div style="margin-top:6px;font-weight:800">الإمتحان هتقفله معانا ☝🏻</div>
+</header>
+
+<div class="container">
+
+  <div class="top-bar">
+    <div class="progress-box">
+      <div class="progress-text">
+        <span id="progressText"></span>
+        <span>
+          ✅ <span id="correctCount">0</span> |
+          ❎ <span id="wrongCount">0</span> |
+          ⏱️ <span id="remainPercent">100%</span>
+        </span>
+      </div>
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+    <div class="timer" id="timer">30:00</div>
+  </div>
+
+  <div id="app"></div>
+</div>
+
+<script>
+/* ===== Questions ===== */
+let questions = [
+  {
+    "t": "A 24-year-old primigravida is in the active phase of labor. The midwife performs a vaginal examination to estimate the shortest diameter of the pelvic inlet. Which diameter is being assessed?",
+    "o": ["Anatomical conjugate", "Obstetric conjugate", "Diagonal conjugate", "External conjugate"],
+    "a": 1
+  },
+  {
+    "t": "During a prenatal clinic visit, a nurse explains the anatomy of the fetal skull to a student. Which suture is located between the two parietal bones?",
+    "o": ["Frontal suture", "Coronal suture", "Sagittal suture", "Lambdoid suture"],
+    "a": 2
+  },
+  {
+    "t": "A woman is diagnosed with a 'kidney-shaped' pelvic inlet during a pelvic assessment. This characteristic is typical of which pelvic type?",
+    "o": ["Gynecoid", "Android", "Anthropoid", "Platypelloid"],
+    "a": 3
+  },
+  {
+    "t": "A newborn is being examined by a nurse. The nurse notes a diamond-shaped space on the top of the head where the coronal and sagittal sutures meet. What is this structure?",
+    "o": ["Posterior fontanel", "Anterior fontanel", "Mastoid fontanel", "Sphenoid fontanel"],
+    "a": 1
+  },
+  {
+    "t": "A patient asks about the acidic environment of her vagina. The nurse explains that this acidity is maintained by the conversion of glycogen to lactic acid by which organism?",
+    "o": ["Staphylococcus aureus", "Escherichia coli", "Doderlein's lactobacillus", "Candida albicans"],
+    "a": 2
+  },
+  {
+    "t": "During a gynecological exam, the physician mentions the 'Pouch of Douglas'. Where is this located in relation to the uterus?",
+    "o": ["Anteriorly", "Posteriorly", "Laterally", "Superiorly"],
+    "a": 1
+  },
+  {
+    "t": "A nurse is teaching a class on female anatomy. Which part of the vulva is described as a small erectile organ corresponding to the male penis?",
+    "o": ["Labia majora", "Labia minora", "Clitoris", "Mons pubis"],
+    "a": 2
+  },
+  {
+    "t": "The false pelvis is located above the pelvic brim and has no obstetric importance.",
+    "o": ["True", "False"],
+    "a": 0
+  },
+  {
+    "t": "A patient is in labor, and the nurse is monitoring the fetal head. Molding is possible because the bones of the vault are not joined. Which bone is NOT part of the fetal skull vault?",
+    "o": ["Frontal bone", "Parietal bone", "Occipital bone", "Sphenoid bone"],
+    "a": 3
+  },
+  {
+    "t": "A nurse is assessing the pelvic outlet. Which diameter is measured from the symphysis pubis to the sacrococcygeal joint?",
+    "o": ["Anteroposterior diameter", "Transverse diameter", "Oblique diameter", "Sacro-cotyloid diameter"],
+    "a": 0
+  },
+  {
+    "t": "A woman has a pelvis characterized by a heart-shaped inlet and narrow pubic arch. This is most likely which type of pelvis?",
+    "o": ["Gynecoid", "Android", "Anthropoid", "Platypelloid"],
+    "a": 1
+  },
+  {
+    "t": "The nurse explains that the uterus has three layers. Which layer is the muscular coat that forms the main bulk of the uterus?",
+    "o": ["Endometrium", "Myometrium", "Perimetrium", "Epimetrium"],
+    "a": 1
+  },
+  {
+    "t": "A student nurse is asked to locate the Bartholin's glands. Where are they situated?",
+    "o": ["On either side of the clitoris", "On either side of the urethral orifice", "On either side of the vaginal orifice", "In the mons pubis"],
+    "a": 2
+  },
+  {
+    "t": "The anterior wall of the vagina is longer than the posterior wall.",
+    "o": ["True", "False"],
+    "a": 1
+  },
+  {
+    "t": "A pregnant woman is told her baby's head is 'engaged'. This means the widest part of the head has passed through which part of the pelvis?",
+    "o": ["Pelvic inlet", "Pelvic cavity", "Pelvic outlet", "False pelvis"],
+    "a": 0
+  },
+    {
+    "t": "Which fontanel is triangular in shape and closes by 6 to 8 weeks of age?",
+    "o": ["Anterior fontanel", "Posterior fontanel", "Mastoid fontanel", "Sphenoid fontanel"],
+    "a": 1
+  },
+  {
+    "t": "A 28-year-old woman presents with inflammation of the hairless skin folds lying between the labia majora. These structures are the:",
+    "o": ["Mons pubis", "Labia minora", "Clitoris", "Vestibule"],
+    "a": 1
+  },
+    {
+    "t": "A patient asks why the endometrium changes in thickness. The nurse explains it undergoes cyclical changes between:",
+    "o": ["1 and 5 mm", "5 and 10 mm", "10 and 15 mm", "15 and 20 mm"],
+    "a": 0
+  },
       {
-        "id": "page_1",
-        "pageTimings": {
-          "onContentLoad": 143,
-          "onLoad": 149
-        },
-        "startedDateTime": "2026-09-15T01:35:21.157+03:00",
-        "title": "https://gaith-team.github.io/exam/obstetric/lecture2/questions.html"
-      }
-    ],
-    "entries": [
-      {
-        "startedDateTime": "2026-09-15T01:35:21.157+03:00",
-        "request": {
-          "bodySize": 0,
-          "method": "GET",
-          "url": "https://gaith-team.github.io/exam/obstetric/lecture2/questions.html",
-          "httpVersion": "HTTP/2",
-          "headers": [
-            {
-              "name": "Host",
-              "value": "gaith-team.github.io"
-            },
-            {
-              "name": "User-Agent",
-              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0"
-            },
-            {
-              "name": "Accept",
-              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
-            },
-            {
-              "name": "Accept-Language",
-              "value": "en-US,en;q=0.9"
-            },
-            {
-              "name": "Accept-Encoding",
-              "value": "gzip, deflate, br, zstd"
-            },
-            {
-              "name": "Connection",
-              "value": "keep-alive"
-            },
-            {
-              "name": "Upgrade-Insecure-Requests",
-              "value": "1"
-            },
-            {
-              "name": "Sec-Fetch-Dest",
-              "value": "document"
-            },
-            {
-              "name": "Sec-Fetch-Mode",
-              "value": "navigate"
-            },
-            {
-              "name": "Sec-Fetch-Site",
-              "value": "cross-site"
-            },
-            {
-              "name": "Sec-Fetch-User",
-              "value": "?1"
-            },
-            {
-              "name": "If-Modified-Since",
-              "value": "Tue, 16 Jun 2026 16:01:19 GMT"
-            },
-            {
-              "name": "If-None-Match",
-              "value": "W/\"6a31734f-4e49\""
-            },
-            {
-              "name": "Priority",
-              "value": "u=0, i"
-            },
-            {
-              "name": "TE",
-              "value": "trailers"
-            }
-          ],
-          "cookies": [],
-          "queryString": [],
-          "headersSize": 582
-        },
-        "response": {
-          "status": 304,
-          "statusText": "",
-          "httpVersion": "HTTP/2",
-          "headers": [
-            {
-              "name": "date",
-              "value": "Mon, 14 Sep 2026 22:35:21 GMT"
-            },
-            {
-              "name": "via",
-              "value": "1.1 varnish"
-            },
-            {
-              "name": "cache-control",
-              "value": "max-age=600"
-            },
-            {
-              "name": "etag",
-              "value": "W/\"6a31734f-4e49\""
-            },
-            {
-              "name": "expires",
-              "value": "Mon, 14 Sep 2026 22:28:32 GMT"
-            },
-            {
-              "name": "age",
-              "value": "58"
-            },
-            {
-              "name": "x-served-by",
-              "value": "cache-lin1730055-LIN"
-            },
-            {
-              "name": "x-cache",
-              "value": "HIT"
-            },
-            {
-              "name": "x-cache-hits",
-              "value": "2"
-            },
-            {
-              "name": "x-timer",
-              "value": "S1789425321.162163,VS0,VE0"
-            },
-            {
-              "name": "vary",
-              "value": "Accept-Encoding"
-            },
-            {
-              "name": "x-fastly-request-id",
-              "value": "c13004ffa0113fce88109deca1106c552d45c214"
-            },
-            {
-              "name": "X-Firefox-Spdy",
-              "value": "h2"
-            }
-          ],
-          "cookies": [],
-          "content": {
-            "mimeType": "text/html; charset=utf-8",
-            "size": 6737,
-            "text": "<!DOCTYPE html>\r\n<html lang=\"ar\">\r\n<head>\r\n<meta charset=\"UTF-8\">\r\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n<title>Gaith Team | Exam</title>\r\n\r\n<style>\r\n:root{\r\n  --primary:#0284c7;\r\n  --secondary:#0ea5e9;\r\n  --bg:#f8fbff;\r\n  --card:#ffffff;\r\n  --soft:#e6f0ff;\r\n  --question:#eef7ff;\r\n  --option:#f9fcff;\r\n  --success:#16a34a;\r\n  --danger:#dc2626;\r\n  --text:#0f172a;\r\n\r\n  /* Brand dynamic */\r\n  --brand1:#ffffff;\r\n  --brand2:#e0f2fe;\r\n}\r\n*{box-sizing:border-box}\r\nbody{\r\n  margin:0;\r\n  font-family:\"Segoe UI\",Tahoma,Arial,sans-serif;\r\n  background:linear-gradient(180deg,var(--bg),#eef6ff);\r\n  color:var(--text);\r\n}\r\n\r\n/* ================= HEADER ================= */\r\nheader{\r\n  background:linear-gradient(90deg,var(--primary),var(--secondary));\r\n  color:#fff;\r\n  padding:18px;\r\n  text-align:center;\r\n  overflow:hidden;\r\n}\r\n\r\n/* ===== Brand ===== */\r\n.logo{\r\n  position:relative;\r\n  font-size:28px;\r\n  font-weight:900;\r\n  display:inline-flex;\r\n  align-items:center;\r\n  gap:6px;\r\n}\r\n\r\n.brand-text{\r\n  background:linear-gradient(90deg,var(--brand1),var(--brand2),var(--brand1));\r\n  background-size:200% auto;\r\n  -webkit-background-clip:text;\r\n  -webkit-text-fill-color:transparent;\r\n  animation:shine 4s linear infinite;\r\n}\r\n@keyframes shine{\r\n  0%{background-position:0%}\r\n  100%{background-position:200%}\r\n}\r\n\r\n.heart{\r\n  display:inline-block;\r\n  animation:heartbeat 1.6s infinite ease-in-out;\r\n}\r\n@keyframes heartbeat{\r\n  0%{transform:scale(1)}\r\n  50%{transform:scale(1.25)}\r\n  100%{transform:scale(1)}\r\n}\r\n\r\n/* Sparkles */\r\n.sparkle{\r\n  position:absolute;\r\n  font-size:14px;\r\n  animation:twinkle 3s infinite ease-in-out;\r\n}\r\n@keyframes twinkle{\r\n  0%{opacity:0;transform:scale(.6)}\r\n  50%{opacity:1;transform:scale(1.2)}\r\n  100%{opacity:0;transform:scale(.6)}\r\n}\r\n\r\n/* Reduced motion أثناء الامتحان */\r\n.exam .sparkle{animation-duration:5s;opacity:.4}\r\n.exam .heart{animation-duration:2.5s}\r\n\r\n/* After exam */\r\n.after .sparkle{animation-duration:2s}\r\n.after .heart{animation-duration:1.1s}\r\n\r\n/* ================= LAYOUT ================= */\r\n.container{max-width:520px;margin:auto;padding:16px}\r\n\r\n/* ===== Top Bar ===== */\r\n.top-bar{\r\n  display:flex;\r\n  gap:12px;\r\n  margin-bottom:16px;\r\n}\r\n.progress-box{\r\n  flex:1;\r\n  background:var(--card);\r\n  padding:14px;\r\n  border-radius:18px;\r\n  box-shadow:0 10px 22px rgba(2,132,199,.12);\r\n}\r\n.progress-text{\r\n  display:flex;\r\n  justify-content:space-between;\r\n  flex-wrap:wrap;\r\n  gap:6px;\r\n  font-weight:800;\r\n  font-size:14px;\r\n}\r\n.progress{\r\n  height:8px;\r\n  background:var(--soft);\r\n  border-radius:10px;\r\n  overflow:hidden;\r\n}\r\n.progress-bar{\r\n  height:100%;\r\n  width:0%;\r\n  background:linear-gradient(90deg,var(--primary),var(--secondary));\r\n}\r\n\r\n/* Timer */\r\n.timer{\r\n  width:64px;height:64px;border-radius:50%;\r\n  background:conic-gradient(var(--primary) 0deg,var(--soft) 0deg);\r\n  display:flex;align-items:center;justify-content:center;\r\n  font-weight:900;font-size:14px;\r\n  background-color:var(--card);\r\n}\r\n\r\n/* ================= CARD ================= */\r\n.card{\r\n  background:var(--card);\r\n  padding:22px;\r\n  border-radius:24px;\r\n  box-shadow:0 18px 36px rgba(2,132,199,.18);\r\n}\r\n.question-title{\r\n  background:var(--question);\r\n  padding:16px;\r\n  border-radius:16px;\r\n  font-weight:900;\r\n  margin-bottom:16px;\r\n}\r\n.option{\r\n  background:var(--option);\r\n  border:2px solid var(--soft);\r\n  border-radius:18px;\r\n  padding:15px;\r\n  margin:12px 0;\r\n  font-weight:700;\r\n  cursor:pointer;\r\n}\r\n.option.correct{background:#eafaf1;border-color:var(--success)}\r\n.option.wrong{background:#fff1f1;border-color:var(--danger)}\r\n.option.disabled{pointer-events:none;opacity:.9}\r\n\r\nbutton{\r\n  margin-top:18px;\r\n  width:100%;\r\n  padding:15px;\r\n  border:none;\r\n  border-radius:20px;\r\n  background:linear-gradient(90deg,var(--primary),var(--secondary));\r\n  color:#fff;\r\n  font-weight:900;\r\n}\r\n\r\n/* Feedback */\r\n.feedback{\r\n  text-align:center;\r\n  font-size:22px;\r\n  margin-bottom:10px;\r\n  animation:pop .5s;\r\n}\r\n@keyframes pop{\r\n  0%{transform:scale(.6);opacity:0}\r\n  100%{transform:scale(1);opacity:1}\r\n}\r\n\r\n/* Report */\r\n.report{\r\n  background:var(--card);\r\n  padding:14px;\r\n  border-radius:14px;\r\n  margin:10px 0;\r\n  border-left:6px solid var(--soft);\r\n}\r\n.report.correct{border-color:var(--success)}\r\n.report.wrong{border-color:var(--danger)}\r\n</style>\r\n</head>\r\n\r\n<body class=\"exam\">\r\n\r\n<header>\r\n  <div class=\"logo\">\r\n    <span class=\"brand-text\">Gaith Team</span>\r\n    <span class=\"heart\">💖</span>\r\n    <span class=\"sparkle\" style=\"top:-8px;left:0\">✨</span>\r\n    <span class=\"sparkle\" style=\"top:6px;right:-8px\">✨</span>\r\n    <span class=\"sparkle\" style=\"bottom:-8px;left:50%\">✨</span>\r\n  </div>\r\n  <div style=\"margin-top:6px;font-weight:800\">الووووو 👏🏻</div>\r\n</header>\r\n\r\n<div class=\"container\">\r\n\r\n  <div class=\"top-bar\">\r\n    <div class=\"progress-box\">\r\n      <div class=\"progress-text\">\r\n        <span id=\"progressText\"></span>\r\n        <span>\r\n          ✔️ <span id=\"correctCount\">0</span> |\r\n          ❌ <span id=\"wrongCount\">0</span> |\r\n          ⏳ <span id=\"remainPercent\">100%</span>\r\n        </span>\r\n      </div>\r\n      <div class=\"progress\">\r\n        <div class=\"progress-bar\" id=\"progressBar\"></div>\r\n      </div>\r\n    </div>\r\n    <div class=\"timer\" id=\"timer\">30:00</div>\r\n  </div>\r\n\r\n  <div id=\"app\"></div>\r\n</div>\r\n\r\n<script>\r\n/* ===== Questions ===== */\r\nlet questions = [\r\n  {\r\n    \"t\": \"A 13-year-old girl visits the school nurse because she just started her first period. She asks what is considered a normal amount of blood loss. What is the correct range?\",\r\n    \"o\": [\"10-20 cc\", \"30-100 cc\", \"150-200 cc\", \"Over 200 cc\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"A 28-year-old woman reports that her menstrual cycle occurs every 18 days. The nurse documents this condition as:\",\r\n    \"o\": [\"Menorrhagia\", \"Oligomenorrhea\", \"Polymenorrhea\", \"Metrorrhagia\"],\r\n    \"a\": 2\r\n  },\r\n  {\r\n    \"t\": \"During a health education session, a nurse explains the ovarian cycle. Which hormone is primarily responsible for the growth and development of ovarian follicles during the first half of the cycle?\",\r\n    \"o\": [\"Luteinizing hormone (LH)\", \"Progesterone\", \"Follicle-stimulating hormone (FSH)\", \"Oxytocin\"],\r\n    \"a\": 2\r\n  },\r\n  {\r\n    \"t\": \"A patient is tracking her ovulation using a basal body temperature chart. The nurse explains that ovulation typically occurs on which day of a 28-day cycle?\",\r\n    \"o\": [\"Day 1\", \"Day 7\", \"Day 14\", \"Day 21\"],\r\n    \"a\": 2\r\n  },\r\n  {\r\n    \"t\": \"A woman complains of heavy menstrual bleeding that lasts for 8 days. The nurse recognizes this as:\",\r\n    \"o\": [\"Hypomenorrhea\", \"Menorrhagia\", \"Polymenorrhea\", \"Oligomenorrhea\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"The nurse is teaching a group of adolescent girls about menstrual hygiene. How often should they be advised to change their sanitary pads?\",\r\n    \"o\": [\"Every 2 hours\", \"At least every 6 hours\", \"Once a day\", \"Only when fully soaked\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"A 35-year-old woman experiences irregular bleeding between her periods. This is medically termed as:\",\r\n    \"o\": [\"Metrorrhagia\", \"Menorrhagia\", \"Polymenorrhea\", \"Hypomenorrhea\"],\r\n    \"a\": 0\r\n  },\r\n  {\r\n    \"t\": \"During the secretory phase of the endometrial cycle, which hormone is dominant and prepares the uterus for a possible pregnancy?\",\r\n    \"o\": [\"Estrogen\", \"Progesterone\", \"FSH\", \"GnRH\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"A patient asks why she feels bloated and irritable a few days before her period starts. The nurse explains these symptoms are part of:\",\r\n    \"o\": [\"Menopause\", \"Menstrual molimina (PMS)\", \"Metrorrhagia\", \"Menarche\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"Normal menstrual blood should not contain large blood clots.\",\r\n    \"o\": [\"True\", \"False\"],\r\n    \"a\": 0\r\n  },\r\n  {\r\n    \"t\": \"A nurse is reviewing the 'Spinnbarkiet test' with a student. This test measures the stretchability of cervical mucus, which should reach how many centimeters during the proliferative phase?\",\r\n    \"o\": [\"1-2 cm\", \"5-10 cm\", \"15-20 cm\", \"Over 25 cm\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"Which phase of the endometrial cycle occurs immediately after the menstrual phase and is characterized by the growth of the endometrium to about 4 mm?\",\r\n    \"o\": [\"Secretory phase\", \"Ischemic phase\", \"Proliferative phase\", \"Luteal phase\"],\r\n    \"a\": 2\r\n  },\r\n  {\r\n    \"t\": \"A woman reports that her periods only last for 2 days and the flow is very light. The nurse identifies this as:\",\r\n    \"o\": [\"Menorrhagia\", \"Polymenorrhea\", \"Hypomenorrhea\", \"Oligomenorrhea\"],\r\n    \"a\": 2\r\n  },\r\n  {\r\n    \"t\": \"The 'Ischemic phase' of the endometrial cycle occurs if fertilization does not happen. How long does this phase typically last?\",\r\n    \"o\": [\"2 days\", \"5 days\", \"10 days\", \"14 days\"],\r\n    \"a\": 0\r\n  },\r\n  {\r\n    \"t\": \"A nurse is advising a girl on how to relieve menstrual cramps. Which non-pharmacological method is recommended?\",\r\n    \"o\": [\"Applying an ice pack to the abdomen\", \"Applying local heat to the lower back\", \"Avoiding all forms of exercise\", \"Restricting fluid intake\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"In the H.P.O axis, which structure secretes Gonadotropin-releasing hormone (GnRH)?\",\r\n    \"o\": [\"Anterior Pituitary\", \"Ovaries\", \"Hypothalamus\", \"Uterus\"],\r\n    \"a\": 2\r\n  },\r\n  {\r\n    \"t\": \"A woman's menstrual cycle lasts 40 days. The nurse records this as:\",\r\n    \"o\": [\"Polymenorrhea\", \"Oligomenorrhea\", \"Menorrhagia\", \"Hypomenorrhea\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"The corpus luteum is formed during which phase of the ovarian cycle?\",\r\n    \"o\": [\"Follicular phase\", \"Ovulation phase\", \"Luteal phase\", \"Ischemic phase\"],\r\n    \"a\": 2\r\n  },\r\n  {\r\n    \"t\": \"A student nurse is asked about the content of menstrual flow. Which of the following is NOT typically found in menstrual discharge?\",\r\n    \"o\": [\"Mucus\", \"Leukocytes\", \"Large blood clots\", \"Cellular debris\"],\r\n    \"a\": 2\r\n  },\r\n  {\r\n    \"t\": \"The average daily loss of iron during menstruation is:\",\r\n    \"o\": [\"0.1 to 0.2 mg\", \"0.5 to 1 mg\", \"5 to 10 mg\", \"15 to 20 mg\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"A patient asks about the best type of exercise to do during her period to help with bloating. The nurse suggests:\",\r\n    \"o\": [\"Violent and excessive exercise\", \"Walking or light cardio\", \"No exercise at all\", \"Heavy weightlifting\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"Which hormone peak is responsible for triggering ovulation?\",\r\n    \"o\": [\"Estrogen peak\", \"Progesterone peak\", \"LH peak\", \"FSH peak\"],\r\n    \"a\": 2\r\n  },\r\n  {\r\n    \"t\": \"A 48-year-old woman has not had a period for 12 months. The nurse identifies this as:\",\r\n    \"o\": [\"Menarche\", \"Menopause\", \"Metrorrhagia\", \"Oligomenorrhea\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"The thickness of the endometrium increases 6 to 8 folds (6-8 mm) during which endometrial phase?\",\r\n    \"o\": [\"Menstrual phase\", \"Proliferative phase\", \"Secretory phase\", \"Ischemic phase\"],\r\n    \"a\": 2\r\n  },\r\n  {\r\n    \"t\": \"A nurse is teaching about nutrition during menstruation. Which foods should be increased to replace iron lost?\",\r\n    \"o\": [\"Processed takeaways\", \"Sugary drinks\", \"Foods rich in iron and folic acid\", \"Crisps and snacks\"],\r\n    \"a\": 2\r\n  },\r\n  {\r\n    \"t\": \"The regenerative phase of the endometrial cycle lasts approximately:\",\r\n    \"o\": [\"1-2 days\", \"3-4 days\", \"10-14 days\", \"28 days\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"True or False: The use of essential oils like lavender or peppermint for massage can help relieve menstrual pain.\",\r\n    \"o\": [\"True\", \"False\"],\r\n    \"a\": 0\r\n  },\r\n  {\r\n    \"t\": \"A patient has a combination of too frequent periods and excessive bleeding. The nurse documents this as:\",\r\n    \"o\": [\"Polymenorrhagia\", \"Menometrorrhagia\", \"Oligomenorrhea\", \"Hypomenorrhea\"],\r\n    \"a\": 0\r\n  },\r\n  {\r\n    \"t\": \"What is the primary cause of the 'Ischemic phase' in the uterus?\",\r\n    \"o\": [\"High levels of progesterone\", \"Degeneration of the corpus luteum\", \"Fertilization of the ovum\", \"LH surge\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"The nurse advises that girls should wash their hands with soap after changing a pad to prevent infection.\",\r\n    \"o\": [\"True\", \"False\"],\r\n    \"a\": 0\r\n  },\r\n  {\r\n    \"t\": \"During the luteal phase, the corpus luteum produces which hormones?\",\r\n    \"o\": [\"Only Estrogen\", \"Only Progesterone\", \"Both Estrogen and Progesterone\", \"Only FSH\"],\r\n    \"a\": 2\r\n  },\r\n  {\r\n    \"t\": \"A woman is tracking her cycle and finds it varies between 21 and 35 days. The nurse tells her this is:\",\r\n    \"o\": [\"Abnormal\", \"Within normal range\", \"Indicative of infertility\", \"A sign of early menopause\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"Which structure in the brain acts as the 'master' of the H.P.O axis by releasing GnRH?\",\r\n    \"o\": [\"Cerebellum\", \"Hypothalamus\", \"Pituitary gland\", \"Thalamus\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"The nurse explains that menstrual blood is typically dark red and has a distinctive odor.\",\r\n    \"o\": [\"True\", \"False\"],\r\n    \"a\": 0\r\n  },\r\n  {\r\n    \"t\": \"Which herbal remedy is mentioned in the lecture as helpful for menstrual pain?\",\r\n    \"o\": [\"Green tea\", \"Ginger and chamomile tea\", \"Black coffee\", \"Energy drinks\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"A nurse is discussing the 'Menstrual phase'. What is the primary event during these 3-5 days?\",\r\n    \"o\": [\"Building up of the endometrium\", \"Shedding of the functional layer of the uterine lining\", \"Release of the ovum\", \"Formation of the corpus luteum\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"How much sleep is recommended for a girl during her menstrual period according to the health teaching?\",\r\n    \"o\": [\"4 hours\", \"6 hours\", \"8 hours plus a 2-hour nap\", \"12 hours\"],\r\n    \"a\": 2\r\n  },\r\n  {\r\n    \"t\": \"The term 'Menarche' refers to:\",\r\n    \"o\": [\"The end of menstruation\", \"The first occurrence of menstruation\", \"Painful menstruation\", \"Irregular menstruation\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"During the proliferative phase, the endometrial glands are described as:\",\r\n    \"o\": [\"Short and curly\", \"Longer and straight\", \"Convoluted and full of secretion\", \"Absent\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"True or False: Moderate exercise during menses is good because it increases abdominal tone.\",\r\n    \"o\": [\"True\", \"False\"],\r\n    \"a\": 0\r\n  },\r\n  {\r\n    \"t\": \"Which analgesic is specifically mentioned as a prostaglandin inhibitor for menstrual pain?\",\r\n    \"o\": [\"Paracetamol\", \"Ibuprofen\", \"Aspirin\", \"Morphine\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"A woman has irregular or continuous bleeding not related to her cycle. This is called:\",\r\n    \"o\": [\"Menorrhagia\", \"Metrorrhagia\", \"Polymenorrhea\", \"Oligomenorrhea\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"The ovarian cycle is under the influence of hormones secreted by the:\",\r\n    \"o\": [\"Posterior Pituitary\", \"Anterior Pituitary\", \"Adrenal glands\", \"Thyroid gland\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"In a normal 28-day cycle, the luteal phase usually lasts for how many days?\",\r\n    \"o\": [\"7 days\", \"14 days\", \"21 days\", \"28 days\"],\r\n    \"a\": 1\r\n  },\r\n  {\r\n    \"t\": \"Which phase of the endometrial cycle is characterized by the cells becoming 'columnar'?\",\r\n    \"o\": [\"Menstrual phase\", \"Proliferative phase\", \"Secretory phase\", \"Ischemic phase\"],\r\n    \"a\": 2\r\n  },\r\n  {\r\n    \"t\": \"True or False: Yoga can help relax a 'cranky and irritable mood' during menstruation.\",\r\n    \"o\": [\"True\", \"False\"],\r\n    \"a\": 0\r\n  },\r\n  {\r\n    \"t\": \"A patient asks about the 'Menstrual molimina'. Which of the following is NOT a symptom mentioned?\",\r\n    \"o\": [\"Headache\", \"Breast fullness\", \"Increased sweating\", \"High fever\"],\r\n    \"a\": 3\r\n  },\r\n  {\r\n    \"t\": \"The functional layer of the uterus is shed during menstruation.\",\r\n    \"o\": [\"True\", \"False\"],\r\n    \"a\": 0\r\n  },\r\n  {\r\n    \"t\": \"Which diameter of the cycle is described as D/C (Duration/Cycle frequency)?\",\r\n    \"o\": [\"Key of menstruation\", \"Rhythm of menstruation\", \"Amount of menstruation\", \"Content of menstruation\"],\r\n    \"a\": 0\r\n  },\r\n  {\r\n    \"t\": \"If pregnancy occurs, the corpus luteum continues to produce hormones until which structure is formed?\",\r\n    \"o\": [\"Fetus\", \"Placenta\", \"Amniotic sac\", \"Umbilical cord\"],\r\n    \"a\": 1\r\n  }\r\n\r\n];\r\n\r\n\r\n\r\n// ===== shuffle questions only =====\r\nfunction shuffleQuestions(array) {\r\n  for (let i = array.length - 1; i > 0; i--) {\r\n    const j = Math.floor(Math.random() * (i + 1));\r\n    [array[i], array[j]] = [array[j], array[i]];\r\n  }\r\n}\r\n\r\n// خلط الأسئلة فقط\r\nshuffleQuestions(questions);\r\n\r\n// تعريف المتغيرات الناقصة\r\nlet i = 0;\r\nlet correct = 0;\r\nlet wrong = 0;\r\nlet answers = [];\r\nlet wrongSet = [];\r\n\r\n/* ===== Timer ===== */\r\nlet totalTime=30*60, timeLeft=totalTime;\r\nconst timerInt=setInterval(()=>{\r\n  timeLeft--;\r\n  let m=Math.floor(timeLeft/60), s=timeLeft%60;\r\n  timer.innerText=`${m}:${s<10?\"0\":\"\"}${s}`;\r\n  let deg=(timeLeft/totalTime)*360;\r\n  timer.style.background=`conic-gradient(var(--primary) ${deg}deg,var(--soft) ${deg}deg)`;\r\n  if(timeLeft<=0){clearInterval(timerInt);finishExam();}\r\n},1000);\r\n\r\n/* ===== UI ===== */\r\nfunction updateTop(){\r\n  let total=questions.length;\r\n  let answered=correct+wrong;\r\n  progressText.innerText=`سؤال ${i+1} من ${total}`;\r\n  progressBar.style.width=((i+1)/total*100)+\"%\";\r\n  correctCount.innerText=correct;\r\n  wrongCount.innerText=wrong;\r\n  remainPercent.innerText=Math.round(((total-answered)/total)*100)+\"%\";\r\n}\r\n\r\n/* ===== Render ===== */\r\nfunction show(){\r\n  updateTop();\r\n  let q = questions[i];\r\n\r\n  app.innerHTML = `\r\n    <div class=\"card\">\r\n      <div class=\"question-title\">${q.t}</div>\r\n      ${q.o.map((o,idx)=>`\r\n        <div class=\"option\" onclick=\"choose(${idx})\">${o}</div>\r\n      `).join(\"\")}\r\n    </div>\r\n  `;\r\n}\r\n/* ===== Choose ===== */\r\nfunction choose(v){\r\n  if(answers[i]!=null) return;\r\n  answers[i]=v;\r\n  let ok=v===questions[i].a;\r\n  ok?correct++:wrong++;\r\n  app.innerHTML=`\r\n    <div class=\"feedback\">${ok?\"🎉 شاطر جدًا كمل\":\"😅 ركّز يا سُكر\"}</div>\r\n    <div class=\"card\">\r\n      <div class=\"question-title\">${questions[i].t}</div>\r\n      ${questions[i].o.map((o,j)=>`\r\n        <div class=\"option ${j===questions[i].a?\"correct\":j===v?\"wrong\":\"\"} disabled\">${o}</div>\r\n      `).join(\"\")}\r\n      <button onclick=\"next()\">التالي</button>\r\n    </div>`;\r\n}\r\n\r\n/* ===== Next ===== */\r\nfunction next(){\r\n  if(i<questions.length-1){i++;show();}\r\n  else finishExam();\r\n}\r\n\r\n/* ===== Finish ===== */\r\nfunction finishExam(){\r\n  document.body.classList.remove(\"exam\");\r\n  document.body.classList.add(\"after\");\r\n\r\n  let score=Math.round((correct/questions.length)*100);\r\n\r\n  if(score>=80){\r\n    document.documentElement.style.setProperty(\"--brand1\",\"#22c55e\");\r\n    document.documentElement.style.setProperty(\"--brand2\",\"#fde047\");\r\n  }else if(score>=50){\r\n    document.documentElement.style.setProperty(\"--brand1\",\"#38bdf8\");\r\n    document.documentElement.style.setProperty(\"--brand2\",\"#e0f2fe\");\r\n  }else{\r\n    document.documentElement.style.setProperty(\"--brand1\",\"#fb923c\");\r\n    document.documentElement.style.setProperty(\"--brand2\",\"#fed7aa\");\r\n  }\r\n\r\n  wrongSet=[];\r\n  let report=\"\";\r\n  questions.forEach((q,idx)=>{\r\n    let ok=answers[idx]===q.a;\r\n    if(!ok) wrongSet.push(q);\r\n    report+=`\r\n      <div class=\"report ${ok?\"correct\":\"wrong\"}\">\r\n        <b>${q.t}</b><br>\r\nإجابتك: ${answers[idx]!=null ? q.o[answers[idx]] : \"لم يتم الحل\"}<br>\r\nالصح: ${q.o[q.a]}\r\n      </div>`;\r\n  });\r\n\r\n  app.innerHTML=`\r\n    <div class=\"card\">\r\n      <h3>?? تقريرك</h3>\r\n      ${report}\r\n      ${wrongSet.length?`<button onclick=\"retry()\">إعادة حل الغلط فقط</button>`:\"<p>أنت ممتاز 👑</p>\"}\r\n    </div>`;\r\n}\r\n\r\n/* ===== Retry Wrong ===== */\r\nfunction retry(){\r\n  // نبدأ امتحان جديد بالأسئلة الغلط فقط\r\n  questions = [...wrongSet];\r\n\r\n  answers = [];\r\n  wrongSet = [];\r\n  i = 0;\r\n  correct = 0;\r\n  wrong = 0;\r\n\r\n  // رجوع لشكل الامتحان\r\n  document.body.classList.remove(\"after\");\r\n  document.body.classList.add(\"exam\");\r\n\r\n  show();\r\n}\r\n\r\nshow();\r\n</script>\r\n\r\n</body>\r\n</html>\r\n"
-          },
-          "redirectURL": "",
-          "headersSize": 381,
-          "bodySize": 7118
-        },
-        "cache": {
-          "afterRequest": {
-            "expires": "4294967295",
-            "lastFetched": "",
-            "fetchCount": "",
-            "_dataSize": "",
-            "_lastModified": "",
-            "_device": ""
-          }
-        },
-        "timings": {
-          "blocked": 0,
-          "dns": 0,
-          "connect": 0,
-          "ssl": 0,
-          "send": 0,
-          "wait": 60,
-          "receive": 0
-        },
-        "time": 60,
-        "_securityState": "secure",
-        "_priority": "Highest",
-        "serverIPAddress": "185.199.109.153",
-        "connection": "443",
-        "pageref": "page_1"
-      }
-    ]
+    "t": "The pelvic cavity is bounded posteriorly by the sacrum.",
+    "o": ["True", "False"],
+    "a": 0
+  },
+  {
+    "t": "A woman has a pelvis with a long and narrow pelvic canal and a long sacrum. This describes which pelvic type?",
+    "o": ["Gynecoid", "Android", "Anthropoid", "Platypelloid"],
+    "a": 2
+  },
+  {
+    "t": "The nurse identifies the narrow area between the uterine cavity and the cervix, which is about 7 mm long, as the:",
+    "o": ["Fundus", "Isthmus", "Corpus", "Cornua"],
+    "a": 1
+  },
+  {
+    "t": "Which structure in the vestibule is located 2.5 cm posterior to the clitoris?",
+    "o": ["Vaginal orifice", "Urethral orifice", "Hymen", "Bartholin's duct"],
+    "a": 1
+  },
+  {
+    "t": "A 22-year-old woman has a thin membrane partially closing her vaginal orifice. This is known as the:",
+    "o": ["Prepuce", "Fourchette", "Hymen", "Perineum"],
+    "a": 2
+  },
+  {
+    "t": "The nurse explains that the fetal skull is formed of the face, the vault, and the base. How many frontal bones are in the fetal skull?",
+    "o": ["One", "Two", "Three", "Four"],
+    "a": 1
+  },
+   {
+    "t": "The nurse notes that the uterus is supported by the pelvic floor and maintained by several ligaments. Which ligaments are also known as Cardinal ligaments?",
+    "o": ["Pubocervical ligaments", "Transverse cervical ligaments", "Uterosacral ligaments", "Round ligaments"],
+    "a": 1
+  },
+  {
+    "t": "The vaginal lining is made of squamous epithelium.",
+    "o": ["True", "False"],
+    "a": 0
+  },
+  {
+    "t": "A woman in labor has a 'Gynecoid' pelvis. What percentage of women typically have this pelvic type?",
+    "o": ["3%", "25%", "33%", "50%"],
+    "a": 3
+  },
+  {
+    "t": "The nurse is discussing the 'cornua' of the uterus. These are the angles where which structures join the uterus?",
+    "o": ["Ovaries", "Fallopian tubes", "Ureters", "Round ligaments"],
+    "a": 1
+  },
+  {
+    "t": "Which suture is located between the parietal and frontal bones?",
+    "o": ["Frontal suture", "Sagittal suture", "Coronal suture", "Lambdoid suture"],
+    "a": 2
+  },
+  {
+    "t": "A patient has a vaginal pH of 4.5. The nurse knows this is:",
+    "o": ["Strongly acidic", "Mildly acidic", "Neutral", "Alkaline"],
+    "a": 0
+  },
+  {
+    "t": "The nurse identifies the part of the cervix that protrudes into the vagina as the:",
+    "o": ["Supra vaginal portion", "Vaginal portion", "Internal os", "External os"],
+    "a": 1
+  },
+    {
+    "t": "The anatomical antero-posterior diameter of the pelvic inlet (true conjugate) measures:",
+    "o": ["10 cm", "11 cm", "12 cm", "13 cm"],
+    "a": 1
+  },
+  {
+    "t": "The posterior fontanel is also known as the 'lambda'.",
+    "o": ["True", "False"],
+    "a": 0
+  },
+  {
+    "t": "A nurse is teaching about the 'Mons Pubis'. This is a pad of fat covered with hair located over which structure?",
+    "o": ["Symphysis pubis", "Sacrum", "Ischial tuberosity", "Iliac crest"],
+    "a": 0
+  },
+    {
+    "t": "The nurse explains that the uterus is situated in the pelvic cavity between which two organs?",
+    "o": ["Bladder and Rectum", "Bladder and Ovaries", "Rectum and Ovaries", "Intestines and Vagina"],
+    "a": 0
+  },
+  {
+    "t": "What is the shape of the anterior fontanel?",
+    "o": ["Triangular", "Diamond-shaped", "Square", "Round"],
+    "a": 1
+  },
+  {
+    "t": "The Skene's glands are two small blind-ended tubules located on either side of the urethral orifice.",
+    "o": ["True", "False"],
+    "a": 0
+  },
+  {
+    "t": "The nurse describes the 'Vestibule' as the region between the:",
+    "o": ["Labia majora", "Labia minora", "Clitoris and Hymen", "Mons pubis and Perineum"],
+    "a": 1
+  },
+    {
+    "t": "The nurse notes that the pelvic outlet is an approximately diamond-shaped space. Which joint marks its posterior boundary?",
+    "o": ["Symphysis pubis", "Sacroiliac joint", "Sacrococcygeal joint", "Ischiopubic rami"],
+    "a": 2
+  }
+
+];
+
+
+
+// ===== shuffle questions only =====
+function shuffleQuestions(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
 }
+
+// خلط الأسئلة فقط
+shuffleQuestions(questions);
+
+// تعريف المتغيرات الناقصة
+let i = 0;
+let correct = 0;
+let wrong = 0;
+let answers = [];
+let wrongSet = [];
+
+/* ===== Timer ===== */
+let totalTime=40*60, timeLeft=totalTime;
+const timerInt=setInterval(()=>{
+  timeLeft--;
+  let m=Math.floor(timeLeft/60), s=timeLeft%60;
+  timer.innerText=`${m}:${s<10?"0":""}${s}`;
+  let deg=(timeLeft/totalTime)*360;
+  timer.style.background=`conic-gradient(var(--primary) ${deg}deg,var(--soft) ${deg}deg)`;
+  if(timeLeft<=0){clearInterval(timerInt);finishExam();}
+},1000);
+
+/* ===== UI ===== */
+function updateTop(){
+  let total=questions.length;
+  let answered=correct+wrong;
+  progressText.innerText=`سؤال ${i+1} من ${total}`;
+  progressBar.style.width=((i+1)/total*100)+"%";
+  correctCount.innerText=correct;
+  wrongCount.innerText=wrong;
+  remainPercent.innerText=Math.round(((total-answered)/total)*100)+"%";
+}
+
+/* ===== Render ===== */
+function show(){
+  updateTop();
+  let q = questions[i];
+
+  app.innerHTML = `
+    <div class="card">
+      <div class="question-title">${q.t}</div>
+      ${q.o.map((o,idx)=>`
+        <div class="option" onclick="choose(${idx})">${o}</div>
+      `).join("")}
+    </div>
+  `;
+}
+/* ===== Choose ===== */
+function choose(v){
+  if(answers[i]!=null) return;
+  answers[i]=v;
+  let ok=v===questions[i].a;
+  ok?correct++:wrong++;
+  app.innerHTML=`
+    <div class="feedback">${ok?"  احسنت":" غلط يا يمعلم"}</div>
+    <div class="card">
+      <div class="question-title">${questions[i].t}</div>
+      ${questions[i].o.map((o,j)=>`
+        <div class="option ${j===questions[i].a?"correct":j===v?"wrong":""} disabled">${o}</div>
+      `).join("")}
+      <button onclick="next()">التالي</button>
+    </div>`;
+}
+
+/* ===== Next ===== */
+function next(){
+  if(i<questions.length-1){i++;show();}
+  else finishExam();
+}
+
+/* ===== Finish ===== */
+function finishExam(){
+  document.body.classList.remove("exam");
+  document.body.classList.add("after");
+
+  let score=Math.round((correct/questions.length)*100);
+
+  if(score>=80){
+    document.documentElement.style.setProperty("--brand1","#22c55e");
+    document.documentElement.style.setProperty("--brand2","#fde047");
+  }else if(score>=50){
+    document.documentElement.style.setProperty("--brand1","#38bdf8");
+    document.documentElement.style.setProperty("--brand2","#e0f2fe");
+  }else{
+    document.documentElement.style.setProperty("--brand1","#fb923c");
+    document.documentElement.style.setProperty("--brand2","#fed7aa");
+  }
+
+  wrongSet=[];
+  let report="";
+  questions.forEach((q,idx)=>{
+    let ok=answers[idx]===q.a;
+    if(!ok) wrongSet.push(q);
+    report+=`
+      <div class="report ${ok?"correct":"wrong"}">
+        <b>${q.t}</b><br>
+إجابتك: ${answers[idx]!=null ? q.o[answers[idx]] : "لم يتم الحل"}<br>
+الصح: ${q.o[q.a]}
+      </div>`;
+  });
+
+  app.innerHTML=`
+    <div class="card">
+      <h3>?? غلطاتك </h3>
+      ${report}
+      ${wrongSet.length?`<button onclick="retry()">إعادة حل الغلط فقط</button>`:"<p>احسنتتتت</p>"}
+    </div>`;
+}
+
+/* ===== Retry Wrong ===== */
+function retry(){
+  // نبدأ امتحان جديد بالأسئلة الغلط فقط
+  questions = [...wrongSet];
+
+  answers = [];
+  wrongSet = [];
+  i = 0;
+  correct = 0;
+  wrong = 0;
+
+  // رجوع لشكل الامتحان
+  document.body.classList.remove("after");
+  document.body.classList.add("exam");
+
+  show();
+}
+
+show();
+</script>
+
+</body>
+</html>
