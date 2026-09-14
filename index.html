@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gaith Team | Exam</title>
+<title>Nokhpa Team | Exam</title>
 
 <style>
 :root{
@@ -204,12 +204,12 @@ button{
 <header>
   <div class="logo">
     <span class="brand-text">Nokhpa Team</span>
-    <span class="heart">👏🏻</span>
-    <span class="sparkle" style="top:-8px;left:0">👏🏻</span>
-    <span class="sparkle" style="top:6px;right:-8px">👏🏻</span>
-    <span class="sparkle" style="bottom:-8px;left:50%">👏🏻</span>
+    <span class="heart">💉</span>
+    <span class="sparkle" style="top:-8px;left:0">💉</span>
+    <span class="sparkle" style="top:6px;right:-8px">💉</span>
+    <span class="sparkle" style="bottom:-8px;left:50%">💉</span>
   </div>
-  <div style="margin-top:6px;font-weight:800">كورس اوئل المعهد  👏🏻</div>
+  <div style="margin-top:6px;font-weight:800">الإمتحان في جيبك ☝🏻</div>
 </header>
 
 <div class="container">
@@ -268,18 +268,8 @@ let questions = [
     "a": 1
   },
   {
-    "t": "A 30-year-old woman is undergoing surgery for a uterine condition. The surgeon needs to identify the ligament that passes from the cervix under the bladder to the pubic bones. Which ligament is this?",
-    "o": ["Transverse cervical ligament", "Uterosacral ligament", "Pubocervical ligament", "Round ligament"],
-    "a": 2
-  },
-  {
     "t": "A nurse is teaching a class on female anatomy. Which part of the vulva is described as a small erectile organ corresponding to the male penis?",
     "o": ["Labia majora", "Labia minora", "Clitoris", "Mons pubis"],
-    "a": 2
-  },
-  {
-    "t": "In the pelvic cavity, the nurse knows that the plane of greatest pelvic dimensions is rounded with all diameters measuring approximately:",
-    "o": ["10 cm", "11 cm", "12.5 cm", "13 cm"],
     "a": 2
   },
   {
@@ -291,11 +281,6 @@ let questions = [
     "t": "A patient is in labor, and the nurse is monitoring the fetal head. Molding is possible because the bones of the vault are not joined. Which bone is NOT part of the fetal skull vault?",
     "o": ["Frontal bone", "Parietal bone", "Occipital bone", "Sphenoid bone"],
     "a": 3
-  },
-  {
-    "t": "During a pelvic exam, the midwife measures the distance from the lower border of the symphysis pubis to the sacral promontory. This measurement is 12.5 cm. What is this diameter called?",
-    "o": ["Obstetric conjugate", "True conjugate", "Diagonal conjugate", "Transverse diameter"],
-    "a": 2
   },
   {
     "t": "A nurse is assessing the pelvic outlet. Which diameter is measured from the symphysis pubis to the sacrococcygeal joint?",
@@ -337,17 +322,12 @@ let questions = [
     "o": ["Mons pubis", "Labia minora", "Clitoris", "Vestibule"],
     "a": 1
   },
-   {
+    {
     "t": "A patient asks why the endometrium changes in thickness. The nurse explains it undergoes cyclical changes between:",
     "o": ["1 and 5 mm", "5 and 10 mm", "10 and 15 mm", "15 and 20 mm"],
     "a": 0
   },
-   {
-    "t": "A nurse is measuring the external conjugate using a pelvimeter. What is the normal measurement for this diameter?",
-    "o": ["10 cm", "11 cm", "12.5 cm", "20 cm"],
-    "a": 3
-  },
-  {
+      {
     "t": "The pelvic cavity is bounded posteriorly by the sacrum.",
     "o": ["True", "False"],
     "a": 0
@@ -377,7 +357,7 @@ let questions = [
     "o": ["One", "Two", "Three", "Four"],
     "a": 1
   },
-    {
+   {
     "t": "The nurse notes that the uterus is supported by the pelvic floor and maintained by several ligaments. Which ligaments are also known as Cardinal ligaments?",
     "o": ["Pubocervical ligaments", "Transverse cervical ligaments", "Uterosacral ligaments", "Round ligaments"],
     "a": 1
@@ -412,7 +392,7 @@ let questions = [
     "o": ["Supra vaginal portion", "Vaginal portion", "Internal os", "External os"],
     "a": 1
   },
-   {
+    {
     "t": "The anatomical antero-posterior diameter of the pelvic inlet (true conjugate) measures:",
     "o": ["10 cm", "11 cm", "12 cm", "13 cm"],
     "a": 1
@@ -427,12 +407,7 @@ let questions = [
     "o": ["Symphysis pubis", "Sacrum", "Ischial tuberosity", "Iliac crest"],
     "a": 0
   },
-  {
-    "t": "Which diameter of the pelvic inlet bisects the true conjugate and is slightly shorter than the anatomical transverse diameter?",
-    "o": ["Obstetric transverse diameter", "Oblique diameter", "Right oblique diameter", "Left oblique diameter"],
-    "a": 0
-  },
-  {
+    {
     "t": "The nurse explains that the uterus is situated in the pelvic cavity between which two organs?",
     "o": ["Bladder and Rectum", "Bladder and Ovaries", "Rectum and Ovaries", "Intestines and Vagina"],
     "a": 0
@@ -452,7 +427,7 @@ let questions = [
     "o": ["Labia majora", "Labia minora", "Clitoris and Hymen", "Mons pubis and Perineum"],
     "a": 1
   },
-   {
+    {
     "t": "The nurse notes that the pelvic outlet is an approximately diamond-shaped space. Which joint marks its posterior boundary?",
     "o": ["Symphysis pubis", "Sacroiliac joint", "Sacrococcygeal joint", "Ischiopubic rami"],
     "a": 2
@@ -523,7 +498,7 @@ function choose(v){
   let ok=v===questions[i].a;
   ok?correct++:wrong++;
   app.innerHTML=`
-    <div class="feedback">${ok?"🎉 شاطر جدًا كمل":"😅 ركّز يا سُكر"}</div>
+    <div class="feedback">${ok?"  احسنت":" غلط يا يمعلم"}</div>
     <div class="card">
       <div class="question-title">${questions[i].t}</div>
       ${questions[i].o.map((o,j)=>`
